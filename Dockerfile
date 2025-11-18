@@ -1,10 +1,10 @@
-FROM n8nio/n8n:1.74.0-debian
+FROM n8nio/n8n:latest-debian
 
 USER root
 
 RUN apt-get update && \
     apt-get install -y ffmpeg python3 python3-pip && \
-    pip3 install moviepy && \
+    pip3 install moviepy numpy Pillow && \
     rm -rf /var/lib/apt/lists/*
 
 USER node
