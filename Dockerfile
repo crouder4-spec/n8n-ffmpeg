@@ -1,8 +1,10 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:1.74.0-debian
 
 USER root
 
-# Instalar ffmpeg en Alpine
-RUN apk update && apk add --no-cache ffmpeg
+RUN apt-get update && \
+    apt-get install -y ffmpeg python3 python3-pip && \
+    pip3 install moviepy && \
+    rm -rf /var/lib/apt/lists/*
 
 USER node
