@@ -1,18 +1,11 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:1.62.0
 
 USER root
 
-# Instalar ffmpeg, Python, pip y libs necesarias desde Alpine
-RUN apk update && \
-    apk add --no-cache \
-        ffmpeg \
-        python3 \
-        py3-pip \
-        py3-numpy \
-        py3-pillow && \
-    # moviepy es puro Python, lo instalamos con pip
-    pip3 install --no-cache-dir moviepy && \
-    # Alias para que 'python' apunte a python3 por si alguna lib lo usa
-    ln -sf /usr/bin/python3 /usr/bin/python
+# Actualizar repos e instalar FFmpeg + Python + pip
+RUN apt-get update && \
+    apt-get install -y ffmpeg python3 python3-pip && \
+    pip3 install --no-cache-dir moviepy numpy pillow && \
+    rm -rf /var/lib/apt/lists/*
 
 USER node
