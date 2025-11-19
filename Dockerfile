@@ -1,18 +1,17 @@
-FROM n8nio/n8n:latest-debian
+FROM n8nio/n8n:latest
 
+# Cambiamos a root para instalar dependencias
 USER root
 
-# Actualizar repos e instalar dependencias
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ffmpeg \
-        python3 \
-        python3-pip \
-        python3-venv \
-        python3-dev \
-        build-essential && \
-    pip3 install --no-cache-dir moviepy numpy pillow && \
-    rm -rf /var/lib/apt/lists/*
+# Actualizamos Alpine e instalamos FFmpeg
+RUN apk update && apk add --no-cache ffmpeg
 
-# Regresar a usuario node
+# Volvemos a usuario n8n
 USER node
+
+# Puerto por defecto del servicio
+EXPOSE 5678
+
+# Comando de inicio de n8n
+CMD ["n8n"]
+
